@@ -275,10 +275,10 @@ function recount(){
             let bCount = bid.c - game.count;
             if(game.zone){
                 let dzBonus = bonuses.double.zone
-                game[game.enemy].bonus = overM*(dzBonus[0]*Math.min(Math.max(1,bCount),0)+dzBonus[2]*Math.max(0,bCount-1));
+                game[game.enemy].bonus = overM*(dzBonus[0]*Math.min(Math.max(0,bCount),1)+dzBonus[1]*Math.max(0,bCount-1));
             } else {
                 let dnzBonus = bonuses.double.nozone
-                game[game.enemy].bonus = overM*(dnzBonus[0]*Math.min(Math.max(1,bCount),0)+dnzBonus[1]*Math.min(Math.max(0,bCount-1),2)+dnzBonus[2]*Math.max(0,bCount-3));
+                game[game.enemy].bonus = overM*(dnzBonus[0]*Math.min(Math.max(0,bCount),1)+dnzBonus[1]*Math.min(Math.max(0,bCount-1),2)+dnzBonus[3]*Math.max(0,bCount-3));
             }
             
         }
