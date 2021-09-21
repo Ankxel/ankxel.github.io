@@ -174,6 +174,14 @@ let bids = {
 }
 let bonuses = {
     insult: 50,
+    slam: {
+        nozone: 500,
+        zone: 750,
+    },
+    grandSlam: {
+        nozone: 1000,
+        zone: 1500,
+    },
     double: {
         nozone: [100, 200, 200, 300],
         zone: [200, 300],
@@ -293,6 +301,11 @@ function recount(){
         if(game.count >= bid.c){
             game[game.team].score = bid.s;
             game[game.team].bonus = bid.b*(game.count - bid.c);
+            if(bid.c === 12){
+                game[game.team].bonus += game.zone ? bonuses.slam.zone : bonuses.slam.nozone;
+            } else if(bid.c === 13){
+                game[game.team].bonus += game.zone ? bonuses.grandSlam.zone : bonuses.grandSlam.nozone;
+            }
         // lose        
         } else {
             game[game.enemy].bonus = bonus*(bid.c - game.count);
@@ -305,8 +318,13 @@ function recount(){
         if(game.count >= bid.c){
             let over = game.zone ? bonuses.double.zoneOver : bonuses.double.nozoneOver;
             game[game.team].score = scoreM*bid.s;
-            game[game.team].bonus = overM*over*(game.count - bid.c);
-        // lose        
+            game[game.team].bonus = overM*over*(game.count - bid.c)+overM*bonuses.insult;
+            if(bid.c === 12){
+                game[game.team].bonus += game.zone ? bonuses.slam.zone : bonuses.slam.nozone;
+            } else if(bid.c === 13){
+                game[game.team].bonus += game.zone ? bonuses.grandSlam.zone : bonuses.grandSlam.nozone;
+            }
+        // lose
         } else {
             let bCount = bid.c - game.count;
             if(game.zone){
